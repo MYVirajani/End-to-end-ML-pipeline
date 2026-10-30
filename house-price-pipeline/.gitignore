@@ -1,0 +1,41 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# MLflow (local experiment tracking)
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Data and models (tracked by DVC, not Git)
+data/raw/house.csv
+data/processed/
+models/
+
+# Secrets and local config
+.env
+.dvc/config.local
+.dvc/tmp/
+.dvc/cache/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+
+/metrics.json
