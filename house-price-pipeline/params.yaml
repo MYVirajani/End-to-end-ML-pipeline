@@ -1,0 +1,13 @@
+data:
+  raw_path: data/raw/house.csv
+  target: Price
+  drop_cols: [Id]
+  test_size: 0.2
+  seed: 42
+
+train:
+  ridge_alpha: 10.0
+  rf_estimators: 300
+  lgbm_estimators: 400
+  lgbm_lr: 0.03
+  lgbm_leaves: 15

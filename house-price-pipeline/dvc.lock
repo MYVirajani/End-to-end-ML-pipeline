@@ -1,0 +1,72 @@
+schema: '2.0'
+stages:
+  validate:
+    cmd: python src/validate.py
+    deps:
+    - path: data/raw/house.csv
+      hash: md5
+      md5: 2911f2d79a55ab8776b2949e35d79681
+      size: 91297
+    - path: src/validate.py
+      hash: md5
+      md5: 3b6584c042607a419c44fd5f379e6a15
+      size: 1121
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw/house.csv
+      hash: md5
+      md5: 2911f2d79a55ab8776b2949e35d79681
+      size: 91297
+    - path: src/prepare.py
+      hash: md5
+      md5: e4b6e8487f0be865c6fe54090f945c6d
+      size: 518
+    - path: src/validate.py
+      hash: md5
+      md5: 3b6584c042607a419c44fd5f379e6a15
+      size: 1121
+    params:
+      params.yaml:
+        data:
+          raw_path: data/raw/house.csv
+          target: Price
+          drop_cols:
+          - Id
+          test_size: 0.2
+          seed: 42
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 5bb86e9fd492a7cd458d2d0a7adaf135.dir
+      size: 82475
+      nfiles: 2
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 5bb86e9fd492a7cd458d2d0a7adaf135.dir
+      size: 82475
+      nfiles: 2
+    - path: src/train.py
+      hash: md5
+      md5: bc1a471ebc47033e9869f333adc641f5
+      size: 3009
+    params:
+      params.yaml:
+        train:
+          ridge_alpha: 10.0
+          rf_estimators: 300
+          lgbm_estimators: 400
+          lgbm_lr: 0.03
+          lgbm_leaves: 15
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: a04c1b536d1e3a4ef1292c75fe44be9f
+      size: 120
+    - path: models/model.pkl
+      hash: md5
+      md5: e2ce8383c1993d57abcca5a7ab3c44b6
+      size: 4490
